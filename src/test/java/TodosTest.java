@@ -197,4 +197,63 @@ class TodosTest {
         Task[] actual = todos.search(query);
         Assertions.assertArrayEquals(expected, actual);
     }
+    @Test
+    public void testSearchWithNullQuery() {
+        Todos todos = new Todos();
+        Task[] expected = {};
+        Task[] actual = todos.search(null); 
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testSearchWithEmptyQuery() {
+        Todos todos = new Todos();
+        Task[] expected = {};
+        Task[] actual = todos.search("");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void testAddNullTask() {
+        Todos todos = new Todos();
+        todos.add(null);
+        Task[] actual = todos.findAll();
+        Assertions.assertEquals(0, actual.length);
+    }
+    @Test
+    public void testSearchAcrossDifferentTaskTypes() {
+        SimpleTask simpleTask = new SimpleTask(1, "Купить молоко");
+        Epic epic = new Epic(2, new String[]{"Молоко", "Хлеб"});
+        Meeting meeting = new Meeting(3, "Обсудить молоко", "Продукты", "12:00");
+
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] expected = {simpleTask, epic, meeting};
+        Task[] actual = todos.search("молоко");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void testAddDuplicateTasks() {
+        SimpleTask task = new SimpleTask(1, "Позвонить");
+        Todos todos = new Todos();
+        todos.add(task);
+        todos.add(task);
+
+        Task[] expected = {task, task};
+        Task[] actual = todos.findAll();
+        Assertions.assertArrayEquals(expected, actual);
+    }
+    @Test
+    public void testSearchCaseInsensitive() {
+        SimpleTask task = new SimpleTask(1, "Позвонить родителям");
+        Todos todos = new Todos();
+        todos.add(task);
+
+        Task[] expected = {task};
+        Task[] actual = todos.search("ПОЗВОНИТЬ");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
 }
