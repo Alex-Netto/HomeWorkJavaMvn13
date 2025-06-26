@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskTest {
 
     @Test
-    public void testSimleTaskMatches() {
+    public void testSimpleTaskMatches() {
         SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
 
         boolean actual = simpleTask.matches("Позвонить");
@@ -15,7 +15,7 @@ class TaskTest {
     }
 
     @Test
-    public void testSimleTaskNotMatches() {
+    public void testSimpleTaskNotMatches() {
         SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
 
         boolean actual = simpleTask.matches("Написать");
