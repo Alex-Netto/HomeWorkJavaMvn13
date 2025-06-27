@@ -1,30 +1,17 @@
 public class Todos {
-    private Task[] tasks = new Task[0]; // <- тут будут все задачи
+    private Task[] tasks = new Task[0];
 
-    /**
-     * Вспомогательный метод для имитации добавления элемента в массив
-     *
-     * @param current Массив, в который мы хотим добавить элемент
-     * @param task    Элемент, который мы хотим добавить
-     * @return Возвращает новый массив, который выглядит как тот, что мы передали,
-     * но с добавлением нового элемента в конец
-     */
     private Task[] addToArray(Task[] current, Task task) {
         Task[] tmp = new Task[current.length + 1];
-        for (int i = 0; i < current.length; i++) {
-            tmp[i] = current[i];
-        }
+        System.arraycopy(current, 0, tmp, 0, current.length);
         tmp[tmp.length - 1] = task;
         return tmp;
     }
 
-    /**
-     * Метод добавления задачи в список дел
-     *
-     * @param task Добавляемая задача
-     */
-    public void add(Task task) { // <- вот здесь в параметре может лежать объект и вида SimpleTask, и вида Epic, и вида Meeting
-        tasks = addToArray(tasks, task);
+    public void add(Task task) {
+        if (task != null) {
+            tasks = addToArray(tasks, task);
+        }
     }
 
     public Task[] findAll() {
@@ -32,9 +19,15 @@ public class Todos {
     }
 
     public Task[] search(String query) {
+        if (query == null || query.isEmpty()) {
+            return new Task[0];
+        }
+
         Task[] result = new Task[0];
+        String lowerQuery = query.toLowerCase();
+
         for (Task task : tasks) {
-            if (task.matches(query)) {
+            if (task != null && task.matches(lowerQuery)) {
                 result = addToArray(result, task);
             }
         }

@@ -4,10 +4,17 @@ public class Meeting extends Task {
     protected String time;
 
     public Meeting(int id, String topic, String project, String time) {
-        super(id); // вызов родительского конструктора
-        this.topic = topic; // заполнение своих полей
+        super(id);
+        this.topic = topic;
         this.project = project;
         this.time = time;
+
+
+    }
+    @Override
+public boolean matches(String query) {
+    return (topic != null && topic.toLowerCase().contains(query)) ||
+            (project != null && project.toLowerCase().contains(query));
     }
 
     public String getTopic() {
@@ -21,16 +28,4 @@ public class Meeting extends Task {
     public String getTime() {
         return time;
     }
-
-    @Override
-    public boolean matches(String query) {
-        if (topic.contains(query)) {
-            return true;
-        }
-        if (project.contains(query)) {
-            return true;
-        }
-        return false;
-    }
-
 }

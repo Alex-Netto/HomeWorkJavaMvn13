@@ -201,7 +201,7 @@ class TodosTest {
     public void testSearchWithNullQuery() {
         Todos todos = new Todos();
         Task[] expected = {};
-        Task[] actual = todos.search(null); 
+        Task[] actual = todos.search(null);
         Assertions.assertArrayEquals(expected, actual);
     }
 

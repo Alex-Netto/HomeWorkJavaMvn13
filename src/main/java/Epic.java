@@ -3,21 +3,17 @@ public class Epic extends Task {
 
     public Epic(int id, String[] subtasks) {
         super(id);
-        this.subtasks = subtasks;
+        this.subtasks = subtasks != null ? subtasks : new String[0];
     }
-
-    //   public String[] getSubtasks() {
-    //       return subtasks;
-    //   }
 
     @Override
     public boolean matches(String query) {
+        if (subtasks == null) return false;
         for (String subtask : subtasks) {
-            if (subtask.contains(query)) {
+            if (subtask != null && subtask.toLowerCase().contains(query)) {
                 return true;
             }
         }
         return false;
-
     }
 }
